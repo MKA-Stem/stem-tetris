@@ -20,7 +20,6 @@
 		"babel-preset-react": "^6.24.1",
 		"babel-register": "^6.24.1",
 		"copy-webpack-plugin": "^4.0.1",
-		"dev": "^0.1.3",
 		"express": "^4.15.2",
 		"express-spa": "^0.0.2",
 		"morgan": "^1.8.1",
