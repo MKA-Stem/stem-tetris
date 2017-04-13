@@ -1,0 +1,33 @@
+{
+	"name": "stem-tetris",
+	"version": "1.0.0",
+	"description": "Leaderboard for the STEM Team Tetris Competition",
+	"main": "server.js",
+	"repository": "https://github.com/wgoodall01/stem-tetris",
+	"author": "William Goodall <wgoodall01@gmail.com>",
+	"license": "MIT",
+	"scripts": {
+		"dev-client": "NODE_ENV=development webpack-dev-server",
+		"dev-server": "NODE_ENV=development PORT=8081 node server.js",
+		"build": "NODE_ENV=production webpack",
+		"heroku-postbuild": "npm run build",
+		"start": "NODE_ENV=production node server.js"
+	},
+	"dependencies": {
+		"babel-core": "^6.24.1",
+		"babel-loader": "^6.4.1",
+		"babel-preset-es2015": "^6.24.1",
+		"babel-preset-react": "^6.24.1",
+		"babel-register": "^6.24.1",
+		"copy-webpack-plugin": "^4.0.1",
+		"dev": "^0.1.3",
+		"express": "^4.15.2",
+		"express-spa": "^0.0.2",
+		"morgan": "^1.8.1",
+		"react": "^15.5.4",
+		"react-dom": "^15.5.4",
+		"react-hot-loader": "^1.3.1",
+		"webpack": "^2.3.3",
+		"webpack-dev-server": "^2.4.2"
+	}
+}
