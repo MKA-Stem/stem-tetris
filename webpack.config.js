@@ -67,8 +67,7 @@ module.exports = {
 			test:/\.(sc|sa|c)ss$/,
 			use:[
 				{loader:"style-loader", options:{sourceMap:true}},
-				{loader:"css-loader",   options:{sourceMap:true, importLoader:1}},
-				{loader:"sass-loader",  options:{sourceMap:true}}
+				{loader:"css-loader",   options:{sourceMap:true, modules:true}},
 			]
 		},
 		{
