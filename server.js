@@ -2,7 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const spa = require("express-spa");
 
-const DEV = process.env.DEV != "production";
+const DEV = process.env.NODE_ENV != "production";
 const app = express();
 const api = require("./api.js");
 
