@@ -3,3 +3,4 @@ node_modules
 .tern-project
 npm-debug.log
 npm-debug.log.*
+__data
