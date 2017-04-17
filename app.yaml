@@ -8,6 +8,11 @@ resources:
     cpu: 1
     memory_gb: 0.5
 
+network:
+    instance_tag: websocket
+    forwarded_ports:
+        - 9000/tcp # This is the WS port
+
 automatic_scaling:
     min_num_instances: 1
     max_num_instances: 1
