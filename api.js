@@ -64,11 +64,10 @@ module.exports = function(db, wss){
 				process.exit(1);
 			}
 			console.log("Dev mode: Assuming localhost for WS url");
-			wsUrl = `localhost:${process.env.PORT}`;
+			wsUrl = `localhost:${process.env.WS_PORT}`;
 		}else{
-			wsUrl = body;
+			wsUrl = body + ":WS_PORT";
 		}
-		console.log(wsUrl);
 	});
 
 	api.getWsUrl = function getWsUrl(req, res){

@@ -1,13 +1,11 @@
 #!/usr/bin/env node
 const express = require("express");
-const http = require("http");
 const WebSocket = require("ws");
 const morgan = require("morgan");
 const spa = require("express-spa");
 
 const DEV = process.env.NODE_ENV != "production";
 const app = express();
-const server = http.createServer(app);
 
 // Connect to Datastore
 const db = require("@google-cloud/datastore")({
@@ -15,7 +13,10 @@ const db = require("@google-cloud/datastore")({
 });
 
 // Setup WS server for events
-const wss = new WebSocket.Server({server});
+const WS_PORT = parseInt(process.env.WS_PORT) || 9000;
+process.env.WS_PORT = WS_PORT;
+const wss = new WebSocket.Server({port:WS_PORT});
+console.log("WS listening on ws://localhost:"+WS_PORT)
 
 // Middleware
 app.use(morgan(DEV?"dev":"combined"));
@@ -32,5 +33,5 @@ app.use(express.static("dist"));
 
 const PORT = parseInt(process.env.PORT) || 8080;
 process.env.PORT = PORT;
-server.listen(PORT);
+app.listen(PORT);
 console.log("Listening on http://localhost:"+PORT);

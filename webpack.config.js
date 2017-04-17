@@ -49,7 +49,7 @@ module.exports = {
 
 			// Minify production JS
 			new webpack.optimize.UglifyJsPlugin({
-				compress:{screw_ie8:true},
+				compress:{screw_ie8:true, warnings:false},
 				output:{comments:false},
 				sourceMap:true
 			}),
