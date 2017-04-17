@@ -66,7 +66,7 @@ module.exports = function(db, wss){
 			console.log("Dev mode: Assuming localhost for WS url");
 			wsUrl = `localhost:${process.env.WS_PORT}`;
 		}else{
-			wsUrl = body + ":WS_PORT";
+			wsUrl = `${body}:${process.env.WS_PORT}`;
 		}
 	});
 

@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+// Start stackdriver trace-ing
+const agent = require("@google-cloud/trace-agent").start();
+
 const express = require("express");
 const WebSocket = require("ws");
 const morgan = require("morgan");
