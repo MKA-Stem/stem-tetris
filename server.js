@@ -1,13 +1,17 @@
 #!/usr/bin/env node
-// Start stackdriver trace-ing
-const agent = require("@google-cloud/trace-agent").start();
+const DEV = process.env.NODE_ENV != "production";
+
+// Stackdriver agents for prod
+if(!DEV){
+	const traceAgent = require("@google-cloud/trace-agent").start();
+	const debugAgent = require("@google-cloud/debug-agent").start({ allowExpressions: true });
+}
 
 const express = require("express");
 const WebSocket = require("ws");
 const morgan = require("morgan");
 const spa = require("express-spa");
 
-const DEV = process.env.NODE_ENV != "production";
 const app = express();
 
 // Connect to Datastore

@@ -16,6 +16,7 @@
 	},
 	"dependencies": {
 		"@google-cloud/datastore": "^1.0.0",
+		"@google-cloud/debug-agent": "^1.0.0",
 		"@google-cloud/trace-agent": "^1.0.4",
 		"babel-core": "^6.24.1",
 		"babel-loader": "^6.4.1",

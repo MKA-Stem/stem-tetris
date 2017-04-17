@@ -6,6 +6,9 @@ node_js:
 script:
     - yarn run build
 
+before_deploy:
+    - gcloud debug source gen-repo-info-file # Make the info file for Stackdriver
+
 deploy:
     provider: gae
     skip_cleanup: true # Don't let Travis remove the Webpack build

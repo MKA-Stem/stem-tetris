@@ -63,7 +63,6 @@ module.exports = function(db, wss){
 				throw new Error("Can't find WS URL for this instance, crashing.");
 				process.exit(1);
 			}
-			console.log("Dev mode: Assuming localhost for WS url");
 			wsUrl = `localhost:${process.env.WS_PORT}`;
 		}else{
 			wsUrl = `${body}:${process.env.WS_PORT}`;
