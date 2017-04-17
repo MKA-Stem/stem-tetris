@@ -24,11 +24,13 @@ app.use(morgan(DEV?"dev":"combined"));
 const api = require("./api.js")(db, wss);
 app.get("/api/top", api.top);
 app.post("/api/submit", api.submit);
+app.get("/api/getWsUrl", api.getWsUrl);
 
 // Serve SPA HTML
 app.use(spa("./dist/index.html"));
 app.use(express.static("dist"));
 
 const PORT = parseInt(process.env.PORT) || 8080;
+process.env.PORT = PORT;
 server.listen(PORT);
 console.log("Listening on http://localhost:"+PORT);

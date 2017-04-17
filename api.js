@@ -1,4 +1,5 @@
 const WebSocket = require("ws");
+const request = require("request");
 
 module.exports = function(db, wss){
 	let api = {};
@@ -47,6 +48,37 @@ module.exports = function(db, wss){
 			.catch(err => res.status(500).end());
 	}
 
+	// Get the external URL of the instance and cache it
+	// From https://github.com/GoogleCloudPlatform/nodejs-docs-samples/blob/master/appengine/websockets/app.js
+	var wsUrl = null;
+	request({
+		url: 'http://metadata/computeMetadata/v1//instance/network-interfaces/0/access-configs/0/external-ip',
+		headers: {
+			'Metadata-Flavor': 'Google'
+		}
+	}, (err, resp, body) => {
+		var url = ""
+		if (err || resp.statusCode !== 200) {
+			if(process.env.NODE_ENV == "production"){
+				throw new Error("Can't find WS URL for this instance, crashing.");
+				process.exit(1);
+			}
+			console.log("Dev mode: Assuming localhost for WS url");
+			wsUrl = `localhost:${process.env.PORT}`;
+		}else{
+			wsUrl = body;
+		}
+		console.log(wsUrl);
+	});
+
+	api.getWsUrl = function getWsUrl(req, res){
+		if(!wsUrl){
+			res.status(500).json({error:"Fetching... try again later."});
+		}else{
+			res.status(200).json({url:wsUrl})
+		}
+	}
+	
 	return api;
 }
 

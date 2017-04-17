@@ -1,6 +1,18 @@
+#!/usr/bin/env node
+const request = require("request");
 const WebSocket = require("ws");
 
-let ws = new WebSocket("ws://localhost:8081");
+const appUrl = process.argv[2];
+console.log("Requesting ws url from http://" + appUrl);
 
-ws.on("open", ()=> console.log("Socket connected."));
-ws.on("message", (data, flags) => console.log(data));
+request("http://" + appUrl + "/api/getWsUrl", (err, resp, body) => {
+	console.log("Got from server: " + body);
+	let wsUrl = JSON.parse(body)["url"]
+	if(typeof wsUrl === "undefined"){process.exit(1)}
+	console.log("URL: ws://" + wsUrl)
+	let ws = new WebSocket("ws://" + wsUrl);
+
+	ws.on("open", ()=> console.log("Socket connected."));
+	ws.on("message", (data, flags) => console.log(data));
+})
+
