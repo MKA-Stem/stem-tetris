@@ -1,3 +1,4 @@
+sudo: false
 language: node_js
 node_js:
     - '7'
@@ -14,6 +15,9 @@ deploy:
 
 cache:
     yarn: true
+    directories:
+        - "$HOME/google-cloud-sdk/"
+
 
 before_install:
     - openssl aes-256-cbc -K $encrypted_7ac639a057a3_key -iv $encrypted_7ac639a057a3_iv
