@@ -1,8 +1,10 @@
 import React from "react";
-import {Route, Link} from "react-router-dom";
+import {Route, Switch, Link} from "react-router-dom";
 import {Helmet} from "react-helmet";
 
 import styles from "pages/App.css";
+
+import Submitter from "pages/Submitter.jsx";
 
 const main = props => (
 	<div>
@@ -41,9 +43,10 @@ export default function App(props){
 			</nav>
 		</div>
 
-		<h1 className={styles.testClass}>This is the app header</h1>
-		<pre>Styles: {JSON.stringify(styles)}</pre>
-		<Route exact path="/" component={main}/>
-		<Route path="/about"  component={about}/>
+		<Switch>
+			<Route exact path="/" component={main}/>
+			<Route path="/about"  component={about}/>
+			<Route path="/:token/submit" component={Submitter}/>
+		</Switch>
 	</div>
 }

@@ -67,7 +67,11 @@ module.exports = {
 			test:/\.(sc|sa|c)ss$/,
 			use:[
 				{loader:"style-loader", options:{sourceMap:true}},
-				{loader:"css-loader",   options:{sourceMap:true, modules:true}},
+				{loader:"css-loader",   options:{importLoaders:1, sourceMap:true, modules:true}},
+				{loader:"postcss-loader", options:{plugins: ()=>[
+					require("postcss-import")({path:["./client"]}),
+					require("postcss-cssnext")
+				]}}
 			]
 		},
 		{
