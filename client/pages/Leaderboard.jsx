@@ -1,4 +1,6 @@
 import React from "react";
+import styles from "pages/Leaderboard.css";
+
 
 export default class Leaderboard extends React.Component{
 	constructor(props){
@@ -75,10 +77,13 @@ export default class Leaderboard extends React.Component{
 		return <div>
 			{this.state.loading?
 				<h2>Loading leaders...</h2>
-				:this.state.leaders.map(e => <div key={e.id}>
-					<span>{e.name}</span>
-					<span><b>{e.score}</b></span>
-				</div>)
+				:<div className={styles.scoresContainer}> 
+					{this.state.leaders.map((e, i)=> <div className={styles.score} key={e.id}>
+						<span className={styles.place}>{i + 1}</span>
+						<span className={styles.name}>{e.name}</span>
+						<span className={styles.scoreNumber}>{e.score}</span>
+					</div>)}
+				</div>
 			}
 		</div>
 	}
