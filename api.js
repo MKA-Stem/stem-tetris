@@ -47,7 +47,6 @@ module.exports = function(db, wss){
 			db.save({key, data:obj})
 				.then(result => {
 					res.status(200).end(); 
-					console.dir(result[0].mutationResults)
 					obj.id = result[0].mutationResults[0].key.path[0].id;
 
 					// Send the score to all sockets.
