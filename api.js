@@ -16,6 +16,7 @@ module.exports = function(db, wss){
 			})
 	}
 	fetchToken(); // Get token on app start.
+
 	
 	// Blast a message to all connected sockets.
 	let blast = function(msg){
@@ -36,17 +37,22 @@ module.exports = function(db, wss){
 		
 		let key = db.key("Score");
 		if(req.query.token == token){
-			const obj = {
-				score: parseInt(req.query.score),
-				name: req.query.name.trim()
-			}
 
-			// Send the score to all sockets.
-			blast(obj);
+			let obj = {
+				score: parseInt(req.query.score),
+				name: req.query.name.trim(),
+			}
 
 			// Save the score to db
 			db.save({key, data:obj})
-				.then(result => { res.status(200).end(); })
+				.then(result => {
+					res.status(200).end(); 
+					console.dir(result[0].mutationResults)
+					obj.id = result[0].mutationResults[0].key.path[0].id;
+
+					// Send the score to all sockets.
+					blast(obj);
+				})
 				.catch(err => res.status(500).end()); 
 		}else{
 			res.status(400).json({error:"Bad token"});
@@ -78,10 +84,18 @@ module.exports = function(db, wss){
 		let query = db.createQuery("Score").order("score", {descending:true}).limit(num);
 		db.runQuery(query)
 			.then(dbResponse => {
-				const results = dbResponse[0].map(e => ({name:e.name, score:e.score}));
+				const results = dbResponse[0].map(e => ({
+					name:e.name,
+					score:e.score,
+					id:e[db.KEY].path[1]
+				}));
+
 				res.status(200).json({results})
 			})
-			.catch(err => res.status(500).end());
+			.catch(err => {
+				console.log(err);
+				res.status(500).end()
+			});
 	}
 
 	// Get the external URL of the instance and cache it
@@ -99,9 +113,9 @@ module.exports = function(db, wss){
 				throw new Error("Can't find WS URL for this instance, crashing.");
 				process.exit(1);
 			}
-			wsUrl = `localhost:${process.env.WS_PORT}`;
+			wsUrl = `ws://localhost:${process.env.WS_PORT}`;
 		}else{
-			wsUrl = `${body}:${process.env.WS_PORT}`;
+			wsUrl = `ws://${body}:${process.env.WS_PORT}`;
 		}
 	});
 

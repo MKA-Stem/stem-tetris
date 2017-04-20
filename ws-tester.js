@@ -9,8 +9,8 @@ request("http://" + appUrl + "/api/getWsUrl", (err, resp, body) => {
 	console.log("Got from server: " + body);
 	let wsUrl = JSON.parse(body)["url"]
 	if(typeof wsUrl === "undefined"){process.exit(1)}
-	console.log("URL: ws://" + wsUrl)
-	let ws = new WebSocket("ws://" + wsUrl);
+	console.log("URL: " + wsUrl)
+	let ws = new WebSocket(wsUrl);
 
 	ws.on("open", ()=> console.log("Socket connected."));
 	ws.on("message", (data, flags) => console.log(data));

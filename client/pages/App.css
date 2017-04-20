@@ -34,6 +34,7 @@
 .title{
 	font-size:30px;
 	color:inherit;
+	font-weight:200;
 	text-decoration:none;
 }
 
@@ -50,4 +51,13 @@
 .navSep{
 	margin:0 5px;
 	color:color(var(--color-dark) alpha(-50%));
+}
+
+/* Global styles, make some stuff look better */
+h1 {
+	font-weight:200;
+}
+
+p{
+	font-weight:300;
 }
