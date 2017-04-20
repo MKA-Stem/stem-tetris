@@ -3,6 +3,19 @@ const request = require("request");
 
 module.exports = function(db, wss){
 	let api = {};
+
+	let token = null;
+	const fetchToken = function(){
+		return db.get(db.key(["Token", "0"]))
+			.then(resp => {
+				if(typeof resp[0] == "undefined"){
+					return Promise.reject(new Error("No token in DB"));
+				}
+				token = resp[0].token;
+				return Promise.resolve(token);
+			})
+	}
+	fetchToken(); // Get token on app start.
 	
 	// Blast a message to all connected sockets.
 	let blast = function(msg){
@@ -19,20 +32,43 @@ module.exports = function(db, wss){
 		// Query vars:
 		// - name: string, name for leaderboard
 		// - score: int, the score itself.
-		let key = db.key("Score");
-
-		const obj = {
-			score: parseInt(req.query.score),
-			name: req.query.name.trim()
-		}
+		// - token: Secret admin token.
 		
-		// Send the score to all sockets.
-		blast(obj);
+		let key = db.key("Score");
+		if(req.query.token == token){
+			const obj = {
+				score: parseInt(req.query.score),
+				name: req.query.name.trim()
+			}
 
-		// Save the score to db
-		db.save({key, data:obj})
-			.then(result => { res.status(200).end(); })
-			.catch(err => res.status(500).end()); }
+			// Send the score to all sockets.
+			blast(obj);
+
+			// Save the score to db
+			db.save({key, data:obj})
+				.then(result => { res.status(200).end(); })
+				.catch(err => res.status(500).end()); 
+		}else{
+			res.status(400).json({error:"Bad token"});
+		}
+	}
+
+	api.checkToken = function(req, res){
+		// Check if a token is valid. This will update the locally cached token from db.
+
+		// Query for token obj
+		fetchToken()
+			.then(t => {
+				if(req.query.token === token){
+					// Token is valid
+					res.status(200).json({valid:true});
+				}else{
+					// Token is invalid
+					res.status(200).json({valid:false});
+				}
+			})
+			.catch(err => res.status(500).json({error:"Internal error"}));
+	}
 
 	// Get scores.
 	api.top = function(req, res){

@@ -5,6 +5,7 @@ import {Helmet} from "react-helmet";
 import styles from "pages/App.css";
 
 import Submitter from "pages/Submitter.jsx";
+import AdminAuth from "pages/AdminAuth.jsx";
 
 const main = props => (
 	<div>
@@ -46,7 +47,8 @@ export default function App(props){
 		<Switch>
 			<Route exact path="/" component={main}/>
 			<Route path="/about"  component={about}/>
-			<Route path="/:token/submit" component={Submitter}/>
+			<Route path="/admin/auth/:token" component={AdminAuth}/>
+			<Route path="/admin/submit" component={Submitter}/>
 		</Switch>
 	</div>
 }

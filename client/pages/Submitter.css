@@ -1,29 +1,6 @@
 @import "vars.css";
 
-.formGroup{
-	margin-bottom:15px;
-}
-
-.formEntry{
-	display:block;
-	width:100%;
-	box-shadow: 0px 0px 5px 0px color(var(--color-dark) alpha(-70%));
-	border:none;
-	border-radius:5px;
-	margin-top:5px;
-	padding:10px;
-	font-size:16px;
-}
-
-.formButton{
-	display:block;
-	width:100%;
-	box-shadow: 0px 0px 5px 0px color(var(--color-dark) alpha(-70%));
-	border:none;
-	border-radius:5px;
-	margin-bottom:20px;
-	padding:10px;
-	color:var(--color-white);
-	font-size:16px;
-	background-color:var(--color-primary);
+.formContainer{
+	max-width:300px;
+	margin:0 auto;
 }

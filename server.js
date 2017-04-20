@@ -33,6 +33,7 @@ const api = require("./api.js")(db, wss);
 app.get("/api/top", api.top);
 app.post("/api/submit", api.submit);
 app.get("/api/getWsUrl", api.getWsUrl);
+app.get("/api/checkToken", api.checkToken);
 
 // Serve SPA HTML
 app.use(spa("./dist/index.html"));
