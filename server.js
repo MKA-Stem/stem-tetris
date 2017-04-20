@@ -26,7 +26,7 @@ const wss = new WebSocket.Server({port:WS_PORT});
 console.log("WS listening on ws://localhost:"+WS_PORT)
 
 // Middleware
-app.use(morgan(DEV?"dev":"combined"));
+if(DEV){app.use(morgan("dev"))};
 
 // Serve the API.
 const api = require("./api.js")(db, wss);
