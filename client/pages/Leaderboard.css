@@ -22,6 +22,10 @@
 	/* Flex layout */
 	display:flex;
 	flex-direction:row;
+
+	/* SUPER janky fix for chrome */
+	/* http://stackoverflow.com/a/28618965 */
+	transform: translateZ(0);
 }
 
 .score:nth-child(-n+3){
