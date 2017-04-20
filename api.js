@@ -72,14 +72,17 @@ module.exports = function(db, wss){
 					res.status(200).json({valid:false});
 				}
 			})
-			.catch(err => res.status(500).json({error:"Internal error"}));
+			.catch(err => {
+				console.log(err);
+				res.status(500).json({error:"Internal error"});
+			});
 	}
 
 	// Get scores.
 	api.top = function(req, res){
 		// Query vars:
 		// - num: int, number of scores to fetch.
-		let num = parseInt(req.query.num) || 50
+		let num = parseInt(req.query.num) || 50 // default 50 items.
 		let query = db.createQuery("Score").order("score", {descending:true}).limit(num);
 		db.runQuery(query)
 			.then(dbResponse => {

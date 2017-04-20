@@ -2,17 +2,26 @@
 
 .scoresContainer{
 	column-width:400px;
-	column-gap:50px;
+	column-count:2;
+	column-gap:30px;
 	margin-top:20px;
+
+	@media screen and (max-width: 400px){
+		column-count:1;
+	}
 }
 
 .score{
 	height:30px;
 	line-height:30px;
-	padding-left:20px;
-	padding-right:20px;
+	padding-left:10px;
+	padding-right:10px;
 	border-bottom:0.5px solid color(var(--color-dark) alpha(-70%));
 	color:color(var(--color-dark) alpha(-30%));
+
+	/* Flex layout */
+	display:flex;
+	flex-direction:row;
 }
 
 .score:nth-child(-n+3){
@@ -38,11 +47,23 @@
 
 .place{
 	display:inline-block;
-	width:30px;
+	width:25px;
+	text-align:right;
+	margin-right:8px;
+
+	/* fixed width */
+	flex:none;
 }
 
 .name{
-	
+	overflow:hidden;
+	text-overflow:ellipsis;
+
+	/* Don't crowd the score */
+	padding-right:5px;
+
+	/* expand to take up space */
+	flex:1 1 auto;
 }
 
 .scoreNumber{

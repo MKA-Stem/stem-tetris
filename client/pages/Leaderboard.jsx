@@ -17,7 +17,8 @@ export default class Leaderboard extends React.Component{
 		console.dir(msg);
 		const j = JSON.parse(msg.data);
 		let leaders = this.state.leaders.concat(j);
-		leaders.sort((a,b)=> (b.score - a.score))
+		leaders.sort((a,b)=> (b.score - a.score));
+		leaders = leaders.slice(0, 50); // first 50 items
 		this.setState({leaders});
 	}
 
@@ -79,9 +80,9 @@ export default class Leaderboard extends React.Component{
 				<h2>Loading leaders...</h2>
 				:<div className={styles.scoresContainer}> 
 					{this.state.leaders.map((e, i)=> <div className={styles.score} key={e.id}>
-						<span className={styles.place}>{i + 1}</span>
-						<span className={styles.name}>{e.name}</span>
-						<span className={styles.scoreNumber}>{e.score}</span>
+						<div className={styles.place}>{i + 1}</div>
+						<div className={styles.name}>{e.name}</div>
+						<div className={styles.scoreNumber}>{e.score}</div>
 					</div>)}
 				</div>
 			}

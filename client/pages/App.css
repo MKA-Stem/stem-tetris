@@ -53,6 +53,11 @@
 	color:color(var(--color-dark) alpha(-50%));
 }
 
+.githubRibbonColor::before{
+	/* Ugly !important to override 3rd party lib */
+	background-color:var(--color-primary) !important;
+}
+
 /* Global styles, make some stuff look better */
 h1 {
 	font-weight:200;
